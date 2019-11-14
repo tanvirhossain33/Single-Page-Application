@@ -1,0 +1,83 @@
+<div class="card">
+  <div class="card-body">
+
+      <form #documentForm="ngForm" (ngSubmit)="OnSubmit(documentForm)" autocomplete="on">
+          <div class="form-group">
+            <label>Trade <span class="text-danger">*</span></label>
+            <select name="TradeId" #TradeId="ngModel" [(ngModel)]="service.document.TradeId" (change)="loadLevels(TradeId.value)"
+            class="form-control" required>
+              <option value="" selected="selected"> Select an option</option>
+              <option *ngFor="let c of trades" [ngValue]="c.Id">{{c.Name}}</option>
+            </select>
+            <div class="validation-error" *ngIf="TradeId.invalid && TradeId.touched">
+              <div *ngIf="TradeId.errors.required">Trade is required.</div>
+            </div>
+          </div>
+      
+          <div>
+            <label>Level <span class="text-danger">*</span></label>
+            <select name="LevelId" #LevelId="ngModel" [(ngModel)]="service.document.LevelId" class="form-control" required>
+              <option value="" selected="selected"> Select an option</option>
+              <option *ngFor="let c of levels" [ngValue]="c.Id">{{c.Name}}</option>
+            </select>
+            <div class="validation-error" *ngIf="LevelId.invalid && LevelId.touched">
+              <div *ngIf="LevelId.errors.required">Level is required.</div>
+            </div>
+          </div>
+      
+          
+          <div class="form-group">
+            <label>Syllabus Name <span class="text-danger">*</span></label>
+            <input type="text" name="Syllabus" #Syllabus="ngModel" [(ngModel)]="service.document.Syllabus" class="form-control" minlength="5" required>
+            <div class="validation-error" *ngIf="Syllabus.invalid && Syllabus.touched">
+              <div *ngIf="Syllabus.errors.required">Syllabus Name is required.</div>
+              <div *ngIf="Syllabus.errors.minlength">Syllabus Name must be at least 5 characters long.</div>
+            </div>
+          </div>
+      
+          <div class="form-group">
+            <label>Development Officer <span class="text-danger">*</span></label>
+            <input type="text" name="DevelopmentOfficer" #DevelopmentOfficer="ngModel" [(ngModel)]="service.document.DevelopmentOfficer" class="form-control" minlength="5" required>
+            <div class="validation-error" *ngIf="DevelopmentOfficer.invalid && DevelopmentOfficer.touched">
+              <div *ngIf="DevelopmentOfficer.errors.required">Development Officer is required.</div>
+              <div *ngIf="DevelopmentOfficer.errors.minlength">Development Officer must be at least 5 characters long.</div>
+            </div>
+          </div>
+      
+          <div class="form-group">
+            <label>Manager <span class="text-danger">*</span></label>
+            <input type="text" name="Manager" #Manager="ngModel" [(ngModel)]="service.document.Manager" class="form-control" minlength="5" required>
+            <div class="validation-error" *ngIf="Manager.invalid && Manager.touched">
+              <div *ngIf="Manager.errors.required">Manager is required.</div>
+              <div *ngIf="Manager.errors.minlength">Manager must be at least 5 characters long.</div>
+            </div>
+          </div>
+      
+          <div class="form-group">
+            <label>Active Date <span class="text-danger">*</span></label>
+            <input type="date" name="ActiveDate" #ActiveDate="ngModel" [(ngModel)]="service.document.ActiveDate" class="form-control" required>
+            <div class="validation-error" *ngIf="ActiveDate.invalid && ActiveDate.touched">
+              <div *ngIf="Manager.errors.required">Active Date is required.</div>
+            </div>
+          </div>
+      
+      
+          <div class="form-group">
+            <label>Upload Syllabus <span class="text-danger">*</span></label>
+            <input type="file" (change)="fileChangeEvent($event)" name="SyllabusFileName" #SyllabusFileName="ngModel" [(ngModel)]="service.document.SyllabusFileName" accept=".pdf" class="form-control" required>
+            <div class="validation-error" *ngIf="SyllabusFileName.invalid && SyllabusFileName.touched">
+              <div *ngIf="SyllabusFileName.errors.required">Upload Syllabus is required.</div>
+            </div>
+          </div>
+      
+          <div class="form-group">
+            <button type="submit" *ngIf="!this.service.isUpdate" [disabled]="documentForm.invalid" class="btn btn-lg btn-success">Create</button>
+            <button type="submit" *ngIf="this.service.isUpdate" [disabled]="documentForm.invalid" class="btn btn-lg btn-primary">Update</button>
+            <button type="button" *ngIf="this.service.isUpdate" class="btn btn-lg btn-warning" (click)="cancel()">Cancel</button>
+          </div>
+      
+        </form>
+
+  </div>
+</div>
+

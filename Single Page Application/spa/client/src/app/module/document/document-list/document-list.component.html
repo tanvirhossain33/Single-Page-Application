@@ -1,0 +1,45 @@
+<div class="row">
+  <div>
+    <input type="text" name="search" [(ngModel)]="filter" class="form-control" placeholder="Search">
+  </div>
+  <table class="table table-striped" style="width:100%">
+    <thead>
+      <tr class="table-success">
+        <th (click)="sort('Syllabus')">Syllabus</th>
+        <th (click)="sort('Trade')">Trade</th>
+        <th (click)="sort('Level')">Level</th>
+        <th>Uploaded Syllabus</th>
+
+        <th (click)="sort('ModifiedBy')">Last Modified By</th>
+        <th (click)="sort('Modified')">Last Modified Date</th>
+        <th (click)="sort('ActiveDate')">Active Date</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let document of service.documentList | orderBy: key : reverse | filter: filter | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+        <td>{{document.Syllabus}}</td>
+        <td>{{document.Trade}}</td>
+        <td>{{document.Level}}</td>
+        <td><a class="links_pointer" (click)="download(document.SyllabusFileName)"><u>{{document.SyllabusFileName}}</u></a>
+          </td>
+        <td>{{document.ModifiedBy}}</td>
+        <td>{{document.Modified | date}}</td>
+        <td>{{document.ActiveDate | date}}</td>
+        <td>
+          <div class="btn-group">
+            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Action
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item links_pointer" (click)="getDocumentDetails(document)">Edit</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item links_pointer" (click)="deleteDcument(document.Id)">Delete</a>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </table>
+</div>
